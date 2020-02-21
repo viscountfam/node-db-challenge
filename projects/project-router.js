@@ -34,8 +34,8 @@ router.get('/:id', (req, res) => {
 router.get('/:id/tasks', (req, res) => {
     const { id } = req.params;
 
-    project.findTasks(id)
-    then(tasks => {
+    projects.findTasks(id)
+    .then(tasks => {
         if(tasks) {
             res.status(200).json(tasks)
         } else {
@@ -50,8 +50,8 @@ router.get('/:id/tasks', (req, res) => {
 router.get('/:id/resources', (req, res) => {
     const { id } = req.params;
 
-    project.findResources(id)
-    then(resources => {
+    projects.findResources(id)
+    .then(resources => {
         if(resources) {
             res.status(200).json(resources)
         } else {
@@ -76,6 +76,30 @@ router.post('/', (req, res) => {
         res.status(500).json({ message: 'Failed to create new project'})
     })
 });
+
+router.post('/:id/tasks', (req, res) => {
+    const taskData =  req.body
+    const { id } = req.params
+    projects.addTask(id, taskData)
+        .then(task => {
+            projects.findTasks(id)
+            .then(task => {
+                res.status(200).json(task[task.length -1])
+            })
+        })
+})
+
+router.post('/:id/resources', (req, res) => {
+    const resourceData =  req.body
+    const { id } = req.params
+    projects.addResource(id, resourceData)
+        .then(resource => {
+            projects.findResources(id)
+            .then(resources => {
+                res.status(200).json(resources[resources.length -1])
+            })
+        })
+})
 
 router.put('/:id', (req, res) => {
     const { id } = req.params.id;
