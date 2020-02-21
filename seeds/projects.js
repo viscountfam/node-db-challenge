@@ -1,6 +1,6 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("projects")
+  return knex("Projects")
     .truncate()
     .then(function() {
       // Inserts seed entries
@@ -33,6 +33,6 @@ exports.seed = function(knex) {
         }
       ];
 
-      return knex("table_name").insert(projects);
+      return knex("Projects").insert(projects);
     });
 };
