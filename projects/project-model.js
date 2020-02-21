@@ -8,7 +8,8 @@ module.exports = {
     findTasks,
     findResources,
     addTask,
-    addResource
+    addResource,
+    betterTask
 }
 
 function find(){
@@ -65,4 +66,11 @@ function addResource(Project_id, resource) {
     }
     return db('Resources')
     .insert(newResource, "id")
+}
+
+function betterTask(Project_id){
+    return db('Tasks as t')
+    .join('Projects a p', 't.Project_id', 'p.id')
+    .select('p.Name', 'p.Description', 't.Name', 't.Description', 't.Notes', 't.Completed')
+    .where({Project_id})
 }
