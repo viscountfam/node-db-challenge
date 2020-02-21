@@ -70,7 +70,7 @@ function addResource(Project_id, resource) {
 
 function betterFindTask(Project_id){
     return db('Tasks as t')
-    .select('p.Name', 'p.Description', 't.Name', 't.Description', 't.Notes', 't.Completed')
     .join('Projects a p', 't.Project_id', 'p.id')
+    .select('p.Name', 'p.Description', 't.Name', 't.Description', 't.Notes', 't.Completed')
     .where({Project_id})
 }
